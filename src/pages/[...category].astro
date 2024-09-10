@@ -8,12 +8,12 @@ export async function getStaticPaths() {
   const categoryData = await categoryResponse.json();
   const categories = categoryData.categories;
 
-  function generatePaths(categories: Category[], parentPath: string[] = []): any[] {
+  function generatePaths(categories: Category[], parentPath: string = ''): any[] {
     return categories.flatMap(category => {
-      const currentPath = [...parentPath, category.id];
+      const currentPath = `${parentPath}${parentPath ? '/' : ''}${category.id}`;
       const paths = [{
         params: { category: currentPath },
-        props: { category, breadcrumb: currentPath }
+        props: { category, breadcrumb: currentPath.split('/') }
       }];
 
       if (category.subcategories) {
