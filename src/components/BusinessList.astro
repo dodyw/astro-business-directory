@@ -31,7 +31,7 @@ function renderCategoryBreadcrumbs(categoryPath: string[]) {
   {businesses.length > 0 ? (
     businesses.map((business) => (
       <div class="business-card">
-        <h3>{business.name}</h3>
+        <h3><a href={`/business/${business.id}`}>{business.name}</a></h3>
         <p><strong>Category:</strong> <Fragment set:html={renderCategoryBreadcrumbs(business.category)} /></p>
         <p>{business.description}</p>
         <p><strong>Address:</strong> {business.address}</p>
@@ -67,6 +67,15 @@ function renderCategoryBreadcrumbs(categoryPath: string[]) {
   h3 {
     color: #0066cc;
     margin-bottom: 10px;
+  }
+
+  h3 a {
+    color: #0066cc;
+    text-decoration: none;
+  }
+
+  h3 a:hover {
+    text-decoration: underline;
   }
 
   p {
