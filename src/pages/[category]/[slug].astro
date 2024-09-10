@@ -1,0 +1,52 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getData, fetchListings } from '../../data';
+
+const { category, slug } = Astro.params;
+const data = getData(category, slug);
+
+if (!data) {
+  throw new Error(`Listing not found for category: ${category}, slug: ${slug}`);
+}
+
+export async function getStaticPaths() {
+  const listings = await fetchListings();
+  return listings.map(listing => ({
+    params: { category: listing.category, slug: listing.slug }
+  }));
+}
+---
+
+<Layout title={data.title}>
+  <div class="hero">
+    <h2>{data.title}</h2>
+    <p>Category: {category}</p>
+  </div>
+  <div class="listing-content">
+    <p>{data.description}</p>
+  </div>
+</Layout>
+
+<style>
+  .hero {
+    background-color: var(--primary-color);
+    color: var(--white);
+    text-align: center;
+    padding: 3rem 1rem;
+    margin: -2rem -1rem 2rem -1rem;
+  }
+
+  .hero h2 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+    margin-top: 0;
+  }
+
+  .listing-content {
+    padding: 1rem;
+  }
+</style>

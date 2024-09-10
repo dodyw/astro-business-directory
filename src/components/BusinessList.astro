@@ -21,7 +21,7 @@ if (category) {
 }
 
 function getBusinessUrl(business: Business) {
-  return `/business/${business.slug}`;
+  return `/${business.category.join('/')}/${business.slug}`;
 }
 ---
 
