@@ -1,5 +1,6 @@
 ---
 import type { Business } from '../types';
+import { CONFIG } from '../config';
 
 export interface Props {
   category?: string;
@@ -8,7 +9,7 @@ export interface Props {
 const { category } = Astro.props;
 
 // Fetch the business data
-const response = await fetch('http://localhost:4321/businesses.json');
+const response = await fetch(`${CONFIG.BASE_URL}/businesses.json`);
 const data = await response.json();
 let businesses: Business[] = data.businesses;
 
