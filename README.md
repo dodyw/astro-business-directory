@@ -209,6 +209,17 @@ Example:
 ]
 ```
 
+## 🌐 Demo
+
+Check out the live demo of the project [here](http://astro-business-directory-demo.s3-website-us-east-1.amazonaws.com/).
+
+## 📸 Screenshots
+
+Here are some screenshots of the project:
+
+1. ![Home Page](public/screenshot1.png)
+2. ![Category Page](public/screenshot2.png)
+3. ![Business Page](public/screenshot3.png)
 
 ## 📋 License
 
