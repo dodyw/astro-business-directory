@@ -14,69 +14,52 @@ let businesses: Business[] = data.businesses;
 
 // Filter businesses by category if provided
 if (category) {
-  const categoryParts = category.split('/');
   businesses = businesses.filter((business: Business) => 
-    categoryParts.every((part, index) => business.category[index] === part)
+    business.category.some(cat => cat === category || cat.startsWith(category + '/'))
   );
 }
 
-function renderCategoryBreadcrumbs(categoryPath: string[]) {
-  return categoryPath.map((cat, index) => {
-    const path = categoryPath.slice(0, index + 1).join('/');
-    return `<a href="/${path}">${cat}</a>`;
-  }).join(' > ');
-}
-
 function getBusinessUrl(business: Business) {
-  return `/${business.category.join('/')}/${business.slug}`;
+  return `/business/${business.slug}`;
 }
 ---
 
 <div class="business-list">
-  <h2>Business Directory</h2>
-  {businesses.length > 0 ? (
-    businesses.map((business: Business) => (
-      <div class="business-card">
-        <h3><a href={getBusinessUrl(business)}>{business.name}</a></h3>
-        <p><strong>Category:</strong> <Fragment set:html={renderCategoryBreadcrumbs(business.category)} /></p>
-        <p>{business.description}</p>
-        <p><strong>Address:</strong> {business.address}</p>
-        <p><strong>Phone:</strong> {business.phone}</p>
-        <p><strong>Website:</strong> <a href={business.website} target="_blank" rel="noopener noreferrer">{business.website}</a></p>
-      </div>
-    ))
-  ) : (
-    <p>No businesses found in this category.</p>
-  )}
+  {businesses.map((business: Business) => (
+    <div class="business-card">
+      <h3><a href={getBusinessUrl(business)}>{business.name}</a></h3>
+      <p>{business.description}</p>
+      <p class="categories">{business.category.join(', ')}</p>
+    </div>
+  ))}
 </div>
 
 <style>
   .business-list {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
   }
 
   .business-card {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    background-color: var(--white);
     border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 20px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
   }
 
-  h2 {
-    color: #333;
-    text-align: center;
+  .business-card:hover {
+    transform: translateY(-5px);
   }
 
   h3 {
-    color: #0066cc;
-    margin-bottom: 10px;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
   }
 
   h3 a {
-    color: #0066cc;
+    color: var(--primary-color);
     text-decoration: none;
   }
 
@@ -85,15 +68,11 @@ function getBusinessUrl(business: Business) {
   }
 
   p {
-    margin: 5px 0;
+    margin-bottom: 0.5rem;
   }
 
-  a {
-    color: #0066cc;
-    text-decoration: none;
-  }
-
-  a:hover {
-    text-decoration: underline;
+  .categories {
+    font-size: 0.9rem;
+    color: var(--light-text-color);
   }
 </style>

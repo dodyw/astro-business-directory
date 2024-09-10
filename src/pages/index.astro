@@ -1,130 +1,32 @@
 ---
+import Layout from '../layouts/Layout.astro';
 import BusinessList from '../components/BusinessList.astro';
-import type { Category } from '../types';
-
-// Fetch categories
-const categoryResponse = await fetch('http://localhost:4321/categories.json');
-const categoryData = await categoryResponse.json();
-const categories = categoryData.categories;
-
-function renderCategoryMenu(categories: Category[], currentPath = ''): string {
-  return `
-    <ul>
-      ${categories.map(category => `
-        <li>
-          <a href="/${currentPath}${category.id}">${category.name}</a>
-          ${category.subcategories ? renderCategoryMenu(category.subcategories, `${currentPath}${category.id}/`) : ''}
-        </li>
-      `).join('')}
-    </ul>
-  `;
-}
-
-const categoryMenu = renderCategoryMenu(categories);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Business Directory</title>
-	</head>
-	<body>
-		<header>
-			<h1>Welcome to Our Business Directory</h1>
-		</header>
-		<div class="container">
-			<nav>
-				<h2>Categories</h2>
-				<Fragment set:html={categoryMenu} />
-			</nav>
-			<main>
-				<BusinessList />
-			</main>
-		</div>
-		<footer>
-			<p>&copy; 2023 Business Directory. All rights reserved.</p>
-		</footer>
-	</body>
-</html>
+<Layout title="Home">
+  <div class="hero">
+    <h2>Discover Local Businesses</h2>
+    <p>Find the best services and products in your area</p>
+  </div>
+  <BusinessList />
+</Layout>
 
 <style>
-	body {
-		font-family: Arial, sans-serif;
-		line-height: 1.6;
-		margin: 0;
-		padding: 0;
-		background-color: #f0f0f0;
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-	}
+  .hero {
+    background-color: var(--primary-color);
+    color: var(--white);
+    text-align: center;
+    padding: 3rem 1rem;
+    margin: -2rem -1rem 2rem -1rem;
+  }
 
-	header, footer {
-		background-color: #333;
-		color: #fff;
-		text-align: center;
-		padding: 1rem;
-	}
+  .hero h2 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
 
-	header h1 {
-		margin: 0;
-	}
-
-	.container {
-		display: flex;
-		flex: 1;
-	}
-
-	nav {
-		background-color: #f4f4f4;
-		padding: 1rem;
-		width: 250px;
-		flex-shrink: 0;
-	}
-
-	nav h2 {
-		margin-top: 0;
-	}
-
-	nav ul {
-		list-style-type: none;
-		padding-left: 1rem;
-	}
-
-	nav ul ul {
-		padding-left: 1.5rem;
-	}
-
-	nav a {
-		color: #333;
-		text-decoration: none;
-	}
-
-	nav a:hover {
-		text-decoration: underline;
-	}
-
-	main {
-		flex: 1;
-		padding: 20px;
-		overflow-y: auto;
-	}
-
-	footer {
-		margin-top: auto;
-	}
-
-	@media (max-width: 768px) {
-		.container {
-			flex-direction: column;
-		}
-
-		nav {
-			width: 100%;
-			order: -1;
-		}
-	}
+  .hero p {
+    font-size: 1.2rem;
+    margin-top: 0;
+  }
 </style>

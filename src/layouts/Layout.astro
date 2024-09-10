@@ -1,0 +1,181 @@
+---
+import type { Category } from '../types';
+
+export interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+
+// Fetch categories
+const categoryResponse = await fetch('http://localhost:4321/categories.json');
+const categoryData = await categoryResponse.json();
+const categories = categoryData.categories;
+
+function renderCategoryMenu(categories: Category[], currentPath = ''): string {
+  return `
+    <ul>
+      ${categories.map(category => `
+        <li>
+          <a href="/${currentPath}${category.id}">${category.name}</a>
+          ${category.subcategories ? renderCategoryMenu(category.subcategories, `${currentPath}${category.id}/`) : ''}
+        </li>
+      `).join('')}
+    </ul>
+  `;
+}
+
+const categoryMenu = renderCategoryMenu(categories);
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} - Business Directory</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <div class="header-content">
+        <h1><a href="/">Business Directory</a></h1>
+        <nav class="main-nav">
+          <a href="/">Home</a>
+          <a href="/about">About</a>
+          <a href="/contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+    <div class="container">
+      <aside>
+        <h3>Categories</h3>
+        <nav class="category-nav">
+          <Fragment set:html={categoryMenu} />
+        </nav>
+      </aside>
+      <main>
+        <slot />
+      </main>
+    </div>
+    <footer>
+      <p>&copy; 2023 Business Directory. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --primary-color: #006aff;
+    --secondary-color: #ff5a5f;
+    --background-color: #f7f8f9;
+    --text-color: #2a2a33;
+    --light-text-color: #697684;
+    --white: #ffffff;
+    --border-color: #d1d1d5;
+  }
+
+  body {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+  }
+
+  header {
+    background-color: var(--white);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1rem 0;
+  }
+
+  .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+  }
+
+  header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  header h1 a {
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+
+  .main-nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    margin-left: 1rem;
+    font-weight: 600;
+  }
+
+  .container {
+    display: flex;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  aside {
+    width: 250px;
+    margin-right: 2rem;
+  }
+
+  aside h3 {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+  }
+
+  .category-nav ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  .category-nav li {
+    margin-bottom: 0.5rem;
+  }
+
+  .category-nav a {
+    color: var(--light-text-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .category-nav a:hover {
+    color: var(--primary-color);
+  }
+
+  main {
+    flex: 1;
+  }
+
+  footer {
+    background-color: var(--white);
+    color: var(--light-text-color);
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+    border-top: 1px solid var(--border-color);
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+
+    aside {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 2rem;
+    }
+  }
+</style>

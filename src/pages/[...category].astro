@@ -1,166 +1,84 @@
 ---
+import Layout from '../layouts/Layout.astro';
 import BusinessList from '../components/BusinessList.astro';
 import type { Category } from '../types';
 
 export async function getStaticPaths() {
-  const response = await fetch('http://localhost:4321/categories.json');
-  const data = await response.json();
-  
-  function flattenCategories(categories: Category[], parentPath = ''): any[] {
-    return categories.reduce((acc: any[], category: Category) => {
+  const categoryResponse = await fetch('http://localhost:4321/categories.json');
+  const categoryData = await categoryResponse.json();
+  const categories = categoryData.categories;
+
+  function generatePaths(categories: Category[], parentPath: string[] = []): any[] {
+    return categories.flatMap(category => {
+      const currentPath = [...parentPath, category.id];
+      const paths = [{
+        params: { category: currentPath },
+        props: { category, breadcrumb: currentPath }
+      }];
+
       if (category.subcategories) {
-        const path = `${parentPath}${category.id}`;
-        category.subcategories.forEach((subcategory: Category) => {
-          acc.push({
-            params: { category: `${path}/${subcategory.id}` },
-            props: { 
-              categoryName: `${category.name} - ${subcategory.name}`,
-              categories: data.categories
-            }
-          });
-        });
-        acc.push(...flattenCategories(category.subcategories, `${path}/`));
+        paths.push(...generatePaths(category.subcategories, currentPath));
       }
-      return acc;
-    }, []);
+
+      return paths;
+    });
   }
 
-  return flattenCategories(data.categories);
+  return generatePaths(categories);
 }
 
-const { category } = Astro.params;
-const { categoryName, categories } = Astro.props;
+const { category, breadcrumb } = Astro.props;
 
-function renderCategoryMenu(categories: Category[], currentPath = '', fullCurrentPath = category): string {
-  return `
-    <ul>
-      ${categories.map((cat: Category) => {
-        const path = `${currentPath}${cat.id}`;
-        const isActive = (fullCurrentPath as string).startsWith(path);
-        return `
-          <li>
-            <a href="/${path}" class="${isActive ? 'active' : ''}">${cat.name}</a>
-            ${cat.subcategories && isActive ? renderCategoryMenu(cat.subcategories, `${path}/`, fullCurrentPath) : ''}
-          </li>
-        `;
-      }).join('')}
-    </ul>
-  `;
+async function getBreadcrumbName(id: string): Promise<string> {
+  const findCategory = (categories: Category[], id: string): Category | undefined => {
+    for (const cat of categories) {
+      if (cat.id === id) return cat;
+      if (cat.subcategories) {
+        const found = findCategory(cat.subcategories, id);
+        if (found) return found;
+      }
+    }
+  };
+
+  const categoryResponse = await fetch('http://localhost:4321/categories.json');
+  const categoryData = await categoryResponse.json();
+  const categories = categoryData.categories;
+
+  const foundCategory = findCategory(categories, id);
+  return foundCategory ? foundCategory.name : id;
 }
-
-const categoryMenu = renderCategoryMenu(categories);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{categoryName} - Business Directory</title>
-	</head>
-	<body>
-		<header>
-			<h1>{categoryName} Businesses</h1>
-			<a href="/">Back to Home</a>
-		</header>
-		<div class="container">
-			<nav>
-				<h2>Categories</h2>
-				<Fragment set:html={categoryMenu} />
-			</nav>
-			<main>
-				<BusinessList category={category} />
-			</main>
-		</div>
-		<footer>
-			<p>&copy; 2023 Business Directory. All rights reserved.</p>
-		</footer>
-	</body>
-</html>
+<Layout title={category.name}>
+  <div class="breadcrumb">
+    <a href="/">Home</a>
+    {breadcrumb.map(async (crumb: string, index: number) => (
+      <span>
+        &gt; <a href={`/${breadcrumb.slice(0, index + 1).join('/')}`}>{await getBreadcrumbName(crumb)}</a>
+      </span>
+    ))}
+  </div>
+  <h2>{category.name} Businesses</h2>
+  <BusinessList category={category.id} />
+</Layout>
 
 <style>
-	body {
-		font-family: Arial, sans-serif;
-		line-height: 1.6;
-		margin: 0;
-		padding: 0;
-		background-color: #f0f0f0;
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-	}
+  h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+  }
 
-	header, footer {
-		background-color: #333;
-		color: #fff;
-		text-align: center;
-		padding: 1rem;
-	}
+  .breadcrumb {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
 
-	header h1 {
-		margin: 0;
-	}
+  .breadcrumb a {
+    color: var(--secondary-color);
+    text-decoration: none;
+  }
 
-	header a {
-		color: #fff;
-		text-decoration: none;
-		margin-top: 0.5rem;
-		display: inline-block;
-	}
-
-	.container {
-		display: flex;
-		flex: 1;
-	}
-
-	nav {
-		background-color: #f4f4f4;
-		padding: 1rem;
-		width: 250px;
-		flex-shrink: 0;
-	}
-
-	nav h2 {
-		margin-top: 0;
-	}
-
-	nav ul {
-		list-style-type: none;
-		padding-left: 1rem;
-	}
-
-	nav ul ul {
-		padding-left: 1.5rem;
-	}
-
-	nav a {
-		color: #333;
-		text-decoration: none;
-	}
-
-	nav a:hover, nav a.active {
-		text-decoration: underline;
-	}
-
-	main {
-		flex: 1;
-		padding: 20px;
-		overflow-y: auto;
-	}
-
-	footer {
-		margin-top: auto;
-	}
-
-	@media (max-width: 768px) {
-		.container {
-			flex-direction: column;
-		}
-
-		nav {
-			width: 100%;
-			order: -1;
-		}
-	}
+  .breadcrumb a:hover {
+    text-decoration: underline;
+  }
 </style>

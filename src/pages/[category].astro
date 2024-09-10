@@ -1,146 +1,42 @@
 ---
+import Layout from '../layouts/Layout.astro';
 import BusinessList from '../components/BusinessList.astro';
 import type { Category } from '../types';
 
 export async function getStaticPaths() {
-  const response = await fetch('http://localhost:4321/categories.json');
-  const data = await response.json();
-  
-  return data.categories.map((category: Category) => ({
+  const categoryResponse = await fetch('http://localhost:4321/categories.json');
+  const categoryData = await categoryResponse.json();
+  const categories = categoryData.categories;
+
+  function flattenCategories(categories: Category[]): Category[] {
+    return categories.reduce((acc, category) => {
+      acc.push(category);
+      if (category.subcategories) {
+        acc.push(...flattenCategories(category.subcategories));
+      }
+      return acc;
+    }, [] as Category[]);
+  }
+
+  const flatCategories = flattenCategories(categories);
+
+  return flatCategories.map(category => ({
     params: { category: category.id },
-    props: { categoryName: category.name, categories: data.categories }
+    props: { category: category },
   }));
 }
 
-const { category } = Astro.params as { category: string };
-const { categoryName, categories } = Astro.props as { categoryName: string, categories: Category[] };
-
-function renderCategoryMenu(categories: Category[], currentPath = ''): string {
-  return `
-    <ul>
-      ${categories.map(cat => `
-        <li>
-          <a href="/${currentPath}${cat.id}" ${cat.id === category ? 'class="active"' : ''}>${cat.name}</a>
-          ${cat.subcategories ? renderCategoryMenu(cat.subcategories, `${currentPath}${cat.id}/`) : ''}
-        </li>
-      `).join('')}
-    </ul>
-  `;
-}
-
-const categoryMenu = renderCategoryMenu(categories);
+const { category } = Astro.props;
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{categoryName} - Business Directory</title>
-	</head>
-	<body>
-		<header>
-			<h1>{categoryName} Businesses</h1>
-			<a href="/">Back to Home</a>
-		</header>
-		<div class="container">
-			<nav>
-				<h2>Categories</h2>
-				<Fragment set:html={categoryMenu} />
-			</nav>
-			<main>
-				<BusinessList category={category} />
-			</main>
-		</div>
-		<footer>
-			<p>&copy; 2023 Business Directory. All rights reserved.</p>
-		</footer>
-	</body>
-</html>
+<Layout title={category.name}>
+  <h2>{category.name} Businesses</h2>
+  <BusinessList category={category.id} />
+</Layout>
 
 <style>
-	body {
-		font-family: Arial, sans-serif;
-		line-height: 1.6;
-		margin: 0;
-		padding: 0;
-		background-color: #f0f0f0;
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-	}
-
-	header, footer {
-		background-color: #333;
-		color: #fff;
-		text-align: center;
-		padding: 1rem;
-	}
-
-	header h1 {
-		margin: 0;
-	}
-
-	header a {
-		color: #fff;
-		text-decoration: none;
-		margin-top: 0.5rem;
-		display: inline-block;
-	}
-
-	.container {
-		display: flex;
-		flex: 1;
-	}
-
-	nav {
-		background-color: #f4f4f4;
-		padding: 1rem;
-		width: 250px;
-		flex-shrink: 0;
-	}
-
-	nav h2 {
-		margin-top: 0;
-	}
-
-	nav ul {
-		list-style-type: none;
-		padding-left: 1rem;
-	}
-
-	nav ul ul {
-		padding-left: 1.5rem;
-	}
-
-	nav a {
-		color: #333;
-		text-decoration: none;
-	}
-
-	nav a:hover, nav a.active {
-		text-decoration: underline;
-	}
-
-	main {
-		flex: 1;
-		padding: 20px;
-		overflow-y: auto;
-	}
-
-	footer {
-		margin-top: auto;
-	}
-
-	@media (max-width: 768px) {
-		.container {
-			flex-direction: column;
-		}
-
-		nav {
-			width: 100%;
-			order: -1;
-		}
-	}
+  h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+  }
 </style>
