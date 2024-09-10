@@ -1,17 +1,19 @@
 ---
+import type { Business } from '../types';
+
 export async function getStaticPaths() {
   const response = await fetch('http://localhost:4321/businesses.json');
   const data = await response.json();
   
-  return data.businesses.map(business => ({
+  return data.businesses.map((business: Business) => ({
     params: { slug: `${business.category.join('/')}/${business.slug}` },
     props: { business }
   }));
 }
 
-const { business } = Astro.props;
+const { business } = Astro.props as { business: Business };
 
-function renderCategoryBreadcrumbs(categoryPath) {
+function renderCategoryBreadcrumbs(categoryPath: string[]): string {
   return categoryPath.map((cat, index) => {
     const path = categoryPath.slice(0, index + 1).join('/');
     return `<a href="/${path}">${cat}</a>`;

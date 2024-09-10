@@ -1,15 +1,16 @@
 ---
 import BusinessList from '../components/BusinessList.astro';
+import type { Category } from '../types';
 
 export async function getStaticPaths() {
   const response = await fetch('http://localhost:4321/categories.json');
   const data = await response.json();
   
-  function flattenCategories(categories, parentPath = '') {
-    return categories.reduce((acc, category) => {
+  function flattenCategories(categories: Category[], parentPath = ''): any[] {
+    return categories.reduce((acc: any[], category: Category) => {
       if (category.subcategories) {
         const path = `${parentPath}${category.id}`;
-        category.subcategories.forEach(subcategory => {
+        category.subcategories.forEach((subcategory: Category) => {
           acc.push({
             params: { category: `${path}/${subcategory.id}` },
             props: { 
@@ -30,12 +31,12 @@ export async function getStaticPaths() {
 const { category } = Astro.params;
 const { categoryName, categories } = Astro.props;
 
-function renderCategoryMenu(categories, currentPath = '', fullCurrentPath = category) {
+function renderCategoryMenu(categories: Category[], currentPath = '', fullCurrentPath = category): string {
   return `
     <ul>
-      ${categories.map(cat => {
+      ${categories.map((cat: Category) => {
         const path = `${currentPath}${cat.id}`;
-        const isActive = fullCurrentPath.startsWith(path);
+        const isActive = (fullCurrentPath as string).startsWith(path);
         return `
           <li>
             <a href="/${path}" class="${isActive ? 'active' : ''}">${cat.name}</a>

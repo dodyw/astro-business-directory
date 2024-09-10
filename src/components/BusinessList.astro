@@ -1,4 +1,6 @@
 ---
+import type { Business } from '../types';
+
 export interface Props {
   category?: string;
 }
@@ -8,12 +10,12 @@ const { category } = Astro.props;
 // Fetch the business data
 const response = await fetch('http://localhost:4321/businesses.json');
 const data = await response.json();
-let businesses = data.businesses;
+let businesses: Business[] = data.businesses;
 
 // Filter businesses by category if provided
 if (category) {
   const categoryParts = category.split('/');
-  businesses = businesses.filter(business => 
+  businesses = businesses.filter((business: Business) => 
     categoryParts.every((part, index) => business.category[index] === part)
   );
 }
@@ -25,7 +27,7 @@ function renderCategoryBreadcrumbs(categoryPath: string[]) {
   }).join(' > ');
 }
 
-function getBusinessUrl(business) {
+function getBusinessUrl(business: Business) {
   return `/${business.category.join('/')}/${business.slug}`;
 }
 ---
@@ -33,7 +35,7 @@ function getBusinessUrl(business) {
 <div class="business-list">
   <h2>Business Directory</h2>
   {businesses.length > 0 ? (
-    businesses.map((business) => (
+    businesses.map((business: Business) => (
       <div class="business-card">
         <h3><a href={getBusinessUrl(business)}>{business.name}</a></h3>
         <p><strong>Category:</strong> <Fragment set:html={renderCategoryBreadcrumbs(business.category)} /></p>

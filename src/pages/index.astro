@@ -1,12 +1,13 @@
 ---
 import BusinessList from '../components/BusinessList.astro';
+import type { Category } from '../types';
 
 // Fetch categories
 const categoryResponse = await fetch('http://localhost:4321/categories.json');
 const categoryData = await categoryResponse.json();
 const categories = categoryData.categories;
 
-function renderCategoryMenu(categories, currentPath = '') {
+function renderCategoryMenu(categories: Category[], currentPath = ''): string {
   return `
     <ul>
       ${categories.map(category => `
