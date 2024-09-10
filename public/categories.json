@@ -1,0 +1,63 @@
+{
+  "categories": [
+    {
+      "id": "technology",
+      "name": "Technology",
+      "subcategories": [
+        {
+          "id": "software",
+          "name": "Software",
+          "subcategories": [
+            {"id": "web-development", "name": "Web Development"},
+            {"id": "mobile-apps", "name": "Mobile Apps"},
+            {"id": "enterprise-software", "name": "Enterprise Software"}
+          ]
+        },
+        {
+          "id": "hardware",
+          "name": "Hardware",
+          "subcategories": [
+            {"id": "computers", "name": "Computers"},
+            {"id": "networking", "name": "Networking"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "food-and-beverage",
+      "name": "Food & Beverage",
+      "subcategories": [
+        {"id": "restaurants", "name": "Restaurants"},
+        {"id": "cafes", "name": "Cafes"},
+        {"id": "bars", "name": "Bars"}
+      ]
+    },
+    {
+      "id": "health-and-fitness",
+      "name": "Health & Fitness",
+      "subcategories": [
+        {"id": "gyms", "name": "Gyms"},
+        {"id": "yoga-studios", "name": "Yoga Studios"},
+        {"id": "nutrition", "name": "Nutrition"}
+      ]
+    },
+    {
+      "id": "professional-services",
+      "name": "Professional Services",
+      "subcategories": [
+        {"id": "legal", "name": "Legal"},
+        {"id": "accounting", "name": "Accounting"},
+        {"id": "consulting", "name": "Consulting"}
+      ]
+    },
+    {
+      "id": "retail",
+      "name": "Retail",
+      "subcategories": [
+        {"id": "clothing", "name": "Clothing"},
+        {"id": "electronics", "name": "Electronics"},
+        {"id": "home-goods", "name": "Home Goods"}
+      ]
+    }
+  ]
+}

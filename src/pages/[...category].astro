@@ -1,0 +1,89 @@
+---
+import BusinessList from '../components/BusinessList.astro';
+
+export async function getStaticPaths() {
+  const response = await fetch('http://localhost:4321/categories.json');
+  const data = await response.json();
+  
+  function flattenCategories(categories, parentPath = '') {
+    return categories.reduce((acc, category) => {
+      if (category.subcategories) {
+        const path = `${parentPath}${category.id}`;
+        category.subcategories.forEach(subcategory => {
+          acc.push({
+            params: { category: `${path}/${subcategory.id}` },
+            props: { categoryName: `${category.name} - ${subcategory.name}` }
+          });
+        });
+        acc.push(...flattenCategories(category.subcategories, `${path}/`));
+      }
+      return acc;
+    }, []);
+  }
+
+  return flattenCategories(data.categories);
+}
+
+const { category } = Astro.params;
+const { categoryName } = Astro.props;
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{categoryName} - Business Directory</title>
+	</head>
+	<body>
+		<header>
+			<h1>{categoryName} Businesses</h1>
+			<a href="/">Back to Home</a>
+		</header>
+		<main>
+			<BusinessList category={category} />
+		</main>
+		<footer>
+			<p>&copy; 2023 Business Directory. All rights reserved.</p>
+		</footer>
+	</body>
+</html>
+
+<style>
+	body {
+		font-family: Arial, sans-serif;
+		line-height: 1.6;
+		margin: 0;
+		padding: 0;
+		background-color: #f0f0f0;
+	}
+
+	header, footer {
+		background-color: #333;
+		color: #fff;
+		text-align: center;
+		padding: 1rem;
+	}
+
+	header h1 {
+		margin: 0;
+	}
+
+	header a {
+		color: #fff;
+		text-decoration: none;
+		margin-top: 0.5rem;
+		display: inline-block;
+	}
+
+	main {
+		padding: 20px;
+	}
+
+	footer {
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+	}
+</style>

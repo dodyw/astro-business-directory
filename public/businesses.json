@@ -1,0 +1,274 @@
+{
+  "businesses": [
+    {
+      "id": 1,
+      "name": "TechSolutions Inc.",
+      "category": ["technology", "software", "web-development"],
+      "description": "Innovative web development solutions for businesses",
+      "address": "123 Tech Street, Silicon Valley, CA 94000",
+      "phone": "(555) 123-4567",
+      "website": "https://techsolutions.example.com"
+    },
+    {
+      "id": 2,
+      "name": "MobileMasters",
+      "category": ["technology", "software", "mobile-apps"],
+      "description": "Cutting-edge mobile app development",
+      "address": "456 App Lane, San Francisco, CA 94101",
+      "phone": "(555) 234-5678",
+      "website": "https://mobilemasters.example.com"
+    },
+    {
+      "id": 3,
+      "name": "EnterpriseEdge",
+      "category": ["technology", "software", "enterprise-software"],
+      "description": "Robust enterprise software solutions",
+      "address": "789 Corporate Drive, New York, NY 10001",
+      "phone": "(555) 345-6789",
+      "website": "https://enterpriseedge.example.com"
+    },
+    {
+      "id": 4,
+      "name": "ByteBuilders",
+      "category": ["technology", "hardware", "computers"],
+      "description": "Custom-built computers for professionals",
+      "address": "101 Circuit Road, Austin, TX 78701",
+      "phone": "(555) 456-7890",
+      "website": "https://bytebuilders.example.com"
+    },
+    {
+      "id": 5,
+      "name": "NetworkNinjas",
+      "category": ["technology", "hardware", "networking"],
+      "description": "Expert networking solutions and services",
+      "address": "202 Router Street, Seattle, WA 98101",
+      "phone": "(555) 567-8901",
+      "website": "https://networkninjas.example.com"
+    },
+    {
+      "id": 6,
+      "name": "Gourmet Grille",
+      "category": ["food-and-beverage", "restaurants"],
+      "description": "Fine dining experience with a modern twist",
+      "address": "303 Culinary Court, Chicago, IL 60601",
+      "phone": "(555) 678-9012",
+      "website": "https://gourmetgrille.example.com"
+    },
+    {
+      "id": 7,
+      "name": "Cozy Corner Cafe",
+      "category": ["food-and-beverage", "cafes"],
+      "description": "Charming cafe serving artisanal coffee and pastries",
+      "address": "404 Latte Lane, Portland, OR 97201",
+      "phone": "(555) 789-0123",
+      "website": "https://cozycornercafe.example.com"
+    },
+    {
+      "id": 8,
+      "name": "Mixology Masters",
+      "category": ["food-and-beverage", "bars"],
+      "description": "Craft cocktails and vibrant nightlife",
+      "address": "505 Cocktail Avenue, Miami, FL 33101",
+      "phone": "(555) 890-1234",
+      "website": "https://mixologymasters.example.com"
+    },
+    {
+      "id": 9,
+      "name": "IronWorks Gym",
+      "category": ["health-and-fitness", "gyms"],
+      "description": "State-of-the-art gym equipment and personal training",
+      "address": "606 Fitness Blvd, Los Angeles, CA 90001",
+      "phone": "(555) 901-2345",
+      "website": "https://ironworksgym.example.com"
+    },
+    {
+      "id": 10,
+      "name": "ZenSpace Yoga",
+      "category": ["health-and-fitness", "yoga-studios"],
+      "description": "Peaceful yoga studio for all skill levels",
+      "address": "707 Serenity Street, Boulder, CO 80301",
+      "phone": "(555) 012-3456",
+      "website": "https://zenspaceyoga.example.com"
+    },
+    {
+      "id": 11,
+      "name": "NutriLife Consulting",
+      "category": ["health-and-fitness", "nutrition"],
+      "description": "Personalized nutrition plans and wellness coaching",
+      "address": "808 Vitamin Avenue, San Diego, CA 92101",
+      "phone": "(555) 123-4567",
+      "website": "https://nutrilife.example.com"
+    },
+    {
+      "id": 12,
+      "name": "LegalEase Associates",
+      "category": ["professional-services", "legal"],
+      "description": "Comprehensive legal services for businesses and individuals",
+      "address": "909 Justice Road, Washington, D.C. 20001",
+      "phone": "(555) 234-5678",
+      "website": "https://legalease.example.com"
+    },
+    {
+      "id": 13,
+      "name": "BalanceSheet Bookkeeping",
+      "category": ["professional-services", "accounting"],
+      "description": "Accurate and efficient accounting services",
+      "address": "1010 Ledger Lane, Dallas, TX 75201",
+      "phone": "(555) 345-6789",
+      "website": "https://balancesheet.example.com"
+    },
+    {
+      "id": 14,
+      "name": "StrategySync Consulting",
+      "category": ["professional-services", "consulting"],
+      "description": "Strategic business consulting for growth and innovation",
+      "address": "1111 Insight Avenue, Boston, MA 02101",
+      "phone": "(555) 456-7890",
+      "website": "https://strategysync.example.com"
+    },
+    {
+      "id": 15,
+      "name": "UrbanChic Boutique",
+      "category": ["retail", "clothing"],
+      "description": "Trendy and affordable fashion for all",
+      "address": "1212 Style Street, New York, NY 10002",
+      "phone": "(555) 567-8901",
+      "website": "https://urbanchic.example.com"
+    },
+    {
+      "id": 16,
+      "name": "TechTrove",
+      "category": ["retail", "electronics"],
+      "description": "Latest gadgets and electronics at competitive prices",
+      "address": "1313 Gadget Grove, San Jose, CA 95110",
+      "phone": "(555) 678-9012",
+      "website": "https://techtrove.example.com"
+    },
+    {
+      "id": 17,
+      "name": "CozyNest Home Goods",
+      "category": ["retail", "home-goods"],
+      "description": "Quality home decor and furnishings",
+      "address": "1414 Comfort Court, Atlanta, GA 30301",
+      "phone": "(555) 789-0123",
+      "website": "https://cozynest.example.com"
+    },
+    {
+      "id": 18,
+      "name": "CloudNine Solutions",
+      "category": ["technology", "software", "web-development"],
+      "description": "Cloud-based web applications and services",
+      "address": "1515 Cloud Street, Seattle, WA 98102",
+      "phone": "(555) 890-1234",
+      "website": "https://cloudnine.example.com"
+    },
+    {
+      "id": 19,
+      "name": "AppAlchemy",
+      "category": ["technology", "software", "mobile-apps"],
+      "description": "Transforming ideas into powerful mobile applications",
+      "address": "1616 Innovation Avenue, Austin, TX 78702",
+      "phone": "(555) 901-2345",
+      "website": "https://appalchemy.example.com"
+    },
+    {
+      "id": 20,
+      "name": "DataDynamo",
+      "category": ["technology", "software", "enterprise-software"],
+      "description": "Big data solutions for enterprise-level insights",
+      "address": "1717 Data Drive, Chicago, IL 60602",
+      "phone": "(555) 012-3456",
+      "website": "https://datadynamo.example.com"
+    },
+    {
+      "id": 21,
+      "name": "CircuitCraft",
+      "category": ["technology", "hardware", "computers"],
+      "description": "Bespoke computer builds for gaming and professional use",
+      "address": "1818 Motherboard Lane, Los Angeles, CA 90002",
+      "phone": "(555) 123-4567",
+      "website": "https://circuitcraft.example.com"
+    },
+    {
+      "id": 22,
+      "name": "LinkLogic",
+      "category": ["technology", "hardware", "networking"],
+      "description": "Advanced networking solutions for businesses",
+      "address": "1919 Protocol Place, San Francisco, CA 94102",
+      "phone": "(555) 234-5678",
+      "website": "https://linklogic.example.com"
+    },
+    {
+      "id": 23,
+      "name": "Fusion Flavors",
+      "category": ["food-and-beverage", "restaurants"],
+      "description": "Innovative fusion cuisine from around the world",
+      "address": "2020 Spice Street, Houston, TX 77001",
+      "phone": "(555) 345-6789",
+      "website": "https://fusionflavors.example.com"
+    },
+    {
+      "id": 24,
+      "name": "Bean Dreams",
+      "category": ["food-and-beverage", "cafes"],
+      "description": "Specialty coffee and cozy atmosphere",
+      "address": "2121 Roast Road, Portland, OR 97202",
+      "phone": "(555) 456-7890",
+      "website": "https://beandreams.example.com"
+    },
+    {
+      "id": 25,
+      "name": "Speakeasy Social",
+      "category": ["food-and-beverage", "bars"],
+      "description": "1920s themed bar with classic cocktails",
+      "address": "2222 Prohibition Lane, New Orleans, LA 70112",
+      "phone": "(555) 567-8901",
+      "website": "https://speakeasysocial.example.com"
+    },
+    {
+      "id": 26,
+      "name": "PeakPerformance",
+      "category": ["health-and-fitness", "gyms"],
+      "description": "High-intensity training and performance optimization",
+      "address": "2323 Muscle Avenue, Miami, FL 33102",
+      "phone": "(555) 678-9012",
+      "website": "https://peakperformance.example.com"
+    },
+    {
+      "id": 27,
+      "name": "MindfulMotion",
+      "category": ["health-and-fitness", "yoga-studios"],
+      "description": "Mindfulness-based yoga and meditation classes",
+      "address": "2424 Zen Zone, San Diego, CA 92102",
+      "phone": "(555) 789-0123",
+      "website": "https://mindfulmotion.example.com"
+    },
+    {
+      "id": 28,
+      "name": "VitalityVault",
+      "category": ["health-and-fitness", "nutrition"],
+      "description": "Holistic nutrition and supplement store",
+      "address": "2525 Wellness Way, Denver, CO 80201",
+      "phone": "(555) 890-1234",
+      "website": "https://vitalityvault.example.com"
+    },
+    {
+      "id": 29,
+      "name": "CodeCrafters Academy",
+      "category": ["technology", "software", "web-development"],
+      "description": "Intensive coding bootcamp for aspiring developers",
+      "address": "2626 Syntax Street, New York, NY 10003",
+      "phone": "(555) 901-2345",
+      "website": "https://codecrafters.example.com"
+    },
+    {
+      "id": 30,
+      "name": "QuantumQuill",
+      "category": ["technology", "software", "enterprise-software"],
+      "description": "Quantum computing solutions for cutting-edge businesses",
+      "address": "2727 Quantum Court, Palo Alto, CA 94303",
+      "phone": "(555) 012-3456",
+      "website": "https://quantumquill.example.com"
+    }
+  ]
+}
