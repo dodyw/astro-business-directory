@@ -6,30 +6,32 @@ import type { Category } from '../types';
 export async function getStaticPaths() {
   const categoryResponse = await fetch('http://localhost:4321/categories.json');
   const categoryData = await categoryResponse.json();
-  const categories = categoryData.categories;
+  const categories: Category[] = categoryData.categories;
 
-  function flattenCategories(categories: Category[]): Category[] {
-    return categories.reduce((acc, category) => {
-      acc.push(category);
-      if (category.subcategories) {
-        acc.push(...flattenCategories(category.subcategories));
-      }
-      return acc;
-    }, [] as Category[]);
-  }
-
-  const flatCategories = flattenCategories(categories);
-
-  return flatCategories.map(category => ({
+  return categories.map((category: Category) => ({
     params: { category: category.id },
-    props: { category: category },
+    props: { category }
   }));
 }
 
 const { category } = Astro.props;
+
+async function getCategoryName(id: string): Promise<string> {
+  const categoryResponse = await fetch('http://localhost:4321/categories.json');
+  const categoryData = await categoryResponse.json();
+  const categories: Category[] = categoryData.categories;
+
+  const foundCategory = categories.find((cat: Category) => cat.id === id);
+  return foundCategory ? foundCategory.name : id;
+}
+
+const categoryName = await getCategoryName(category.id);
 ---
 
 <Layout title={category.name}>
+  <div class="breadcrumb">
+    <a href="/">Home</a> &gt; <span>{categoryName}</span>
+  </div>
   <h2>{category.name} Businesses</h2>
   <BusinessList category={category.id} />
 </Layout>
@@ -38,5 +40,23 @@ const { category } = Astro.props;
   h2 {
     color: var(--primary-color);
     margin-bottom: 1rem;
+  }
+
+  .breadcrumb {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .breadcrumb a {
+    color: var(--secondary-color);
+    text-decoration: none;
+  }
+
+  .breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .breadcrumb span {
+    color: var(--text-color);
   }
 </style>

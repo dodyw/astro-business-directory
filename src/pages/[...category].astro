@@ -8,28 +8,31 @@ export async function getStaticPaths() {
   const categoryData = await categoryResponse.json();
   const categories = categoryData.categories;
 
-  function generatePaths(categories: Category[], parentPath: string = ''): any[] {
+  function flattenCategories(categories: Category[], parentPath: string[] = []): { params: { category: string }, props: { category: Category, path: string[] } }[] {
     return categories.flatMap(category => {
-      const currentPath = `${parentPath}${parentPath ? '/' : ''}${category.id}`;
-      const paths = [{
-        params: { category: currentPath },
-        props: { category, breadcrumb: currentPath.split('/') }
-      }];
-
+      const currentPath = [...parentPath, category.id];
+      const result = [];
       if (category.subcategories) {
-        paths.push(...generatePaths(category.subcategories, currentPath));
+        result.push(...category.subcategories.map(subcat => ({
+          params: { category: [...currentPath, subcat.id].join('/') },
+          props: { category: subcat, path: [...currentPath, subcat.id] }
+        })));
+        result.push(...flattenCategories(category.subcategories, currentPath));
       }
-
-      return paths;
+      return result;
     });
   }
 
-  return generatePaths(categories);
+  return flattenCategories(categories);
 }
 
-const { category, breadcrumb } = Astro.props;
+const { category, path } = Astro.props;
 
-async function getBreadcrumbName(id: string): Promise<string> {
+async function getCategoryName(id: string): Promise<string> {
+  const categoryResponse = await fetch('http://localhost:4321/categories.json');
+  const categoryData = await categoryResponse.json();
+  const categories = categoryData.categories;
+
   const findCategory = (categories: Category[], id: string): Category | undefined => {
     for (const cat of categories) {
       if (cat.id === id) return cat;
@@ -40,21 +43,22 @@ async function getBreadcrumbName(id: string): Promise<string> {
     }
   };
 
-  const categoryResponse = await fetch('http://localhost:4321/categories.json');
-  const categoryData = await categoryResponse.json();
-  const categories = categoryData.categories;
-
   const foundCategory = findCategory(categories, id);
   return foundCategory ? foundCategory.name : id;
 }
+
+const breadcrumb = await Promise.all(path.map(getCategoryName));
 ---
 
 <Layout title={category.name}>
   <div class="breadcrumb">
     <a href="/">Home</a>
-    {breadcrumb.map(async (crumb: string, index: number) => (
+    {breadcrumb.map((name, index) => (
       <span>
-        &gt; <a href={`/${breadcrumb.slice(0, index + 1).join('/')}`}>{await getBreadcrumbName(crumb)}</a>
+        &gt; {index === breadcrumb.length - 1 
+          ? <span>{name}</span>
+          : <a href={`/${path.slice(0, index + 1).join('/')}`}>{name}</a>
+        }
       </span>
     ))}
   </div>
@@ -80,5 +84,9 @@ async function getBreadcrumbName(id: string): Promise<string> {
 
   .breadcrumb a:hover {
     text-decoration: underline;
+  }
+
+  .breadcrumb span {
+    color: var(--text-color);
   }
 </style>
