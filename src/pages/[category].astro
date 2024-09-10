@@ -7,12 +7,27 @@ export async function getStaticPaths() {
   
   return data.categories.map(category => ({
     params: { category: category.id },
-    props: { categoryName: category.name }
+    props: { categoryName: category.name, categories: data.categories }
   }));
 }
 
 const { category } = Astro.params;
-const { categoryName } = Astro.props;
+const { categoryName, categories } = Astro.props;
+
+function renderCategoryMenu(categories, currentPath = '') {
+  return `
+    <ul>
+      ${categories.map(cat => `
+        <li>
+          <a href="/${currentPath}${cat.id}" ${cat.id === category ? 'class="active"' : ''}>${cat.name}</a>
+          ${cat.subcategories ? renderCategoryMenu(cat.subcategories, `${currentPath}${cat.id}/`) : ''}
+        </li>
+      `).join('')}
+    </ul>
+  `;
+}
+
+const categoryMenu = renderCategoryMenu(categories);
 ---
 
 <html lang="en">
@@ -28,9 +43,15 @@ const { categoryName } = Astro.props;
 			<h1>{categoryName} Businesses</h1>
 			<a href="/">Back to Home</a>
 		</header>
-		<main>
-			<BusinessList category={category} />
-		</main>
+		<div class="container">
+			<nav>
+				<h2>Categories</h2>
+				<Fragment set:html={categoryMenu} />
+			</nav>
+			<main>
+				<BusinessList category={category} />
+			</main>
+		</div>
 		<footer>
 			<p>&copy; 2023 Business Directory. All rights reserved.</p>
 		</footer>
@@ -44,6 +65,9 @@ const { categoryName } = Astro.props;
 		margin: 0;
 		padding: 0;
 		background-color: #f0f0f0;
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
 	}
 
 	header, footer {
@@ -64,13 +88,58 @@ const { categoryName } = Astro.props;
 		display: inline-block;
 	}
 
+	.container {
+		display: flex;
+		flex: 1;
+	}
+
+	nav {
+		background-color: #f4f4f4;
+		padding: 1rem;
+		width: 250px;
+		flex-shrink: 0;
+	}
+
+	nav h2 {
+		margin-top: 0;
+	}
+
+	nav ul {
+		list-style-type: none;
+		padding-left: 1rem;
+	}
+
+	nav ul ul {
+		padding-left: 1.5rem;
+	}
+
+	nav a {
+		color: #333;
+		text-decoration: none;
+	}
+
+	nav a:hover, nav a.active {
+		text-decoration: underline;
+	}
+
 	main {
+		flex: 1;
 		padding: 20px;
+		overflow-y: auto;
 	}
 
 	footer {
-		position: fixed;
-		bottom: 0;
-		width: 100%;
+		margin-top: auto;
+	}
+
+	@media (max-width: 768px) {
+		.container {
+			flex-direction: column;
+		}
+
+		nav {
+			width: 100%;
+			order: -1;
+		}
 	}
 </style>

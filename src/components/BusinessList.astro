@@ -17,6 +17,13 @@ if (category) {
     categoryParts.every((part, index) => business.category[index] === part)
   );
 }
+
+function renderCategoryBreadcrumbs(categoryPath: string[]) {
+  return categoryPath.map((cat, index) => {
+    const path = categoryPath.slice(0, index + 1).join('/');
+    return `<a href="/${path}">${cat}</a>`;
+  }).join(' > ');
+}
 ---
 
 <div class="business-list">
@@ -25,7 +32,7 @@ if (category) {
     businesses.map((business) => (
       <div class="business-card">
         <h3>{business.name}</h3>
-        <p><strong>Category:</strong> {business.category.join(' > ')}</p>
+        <p><strong>Category:</strong> <Fragment set:html={renderCategoryBreadcrumbs(business.category)} /></p>
         <p>{business.description}</p>
         <p><strong>Address:</strong> {business.address}</p>
         <p><strong>Phone:</strong> {business.phone}</p>

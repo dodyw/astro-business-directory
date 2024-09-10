@@ -34,13 +34,15 @@ const categoryMenu = renderCategoryMenu(categories);
 		<header>
 			<h1>Welcome to Our Business Directory</h1>
 		</header>
-		<nav>
-			<h2>Categories</h2>
-			<Fragment set:html={categoryMenu} />
-		</nav>
-		<main>
-			<BusinessList />
-		</main>
+		<div class="container">
+			<nav>
+				<h2>Categories</h2>
+				<Fragment set:html={categoryMenu} />
+			</nav>
+			<main>
+				<BusinessList />
+			</main>
+		</div>
 		<footer>
 			<p>&copy; 2023 Business Directory. All rights reserved.</p>
 		</footer>
@@ -70,10 +72,16 @@ const categoryMenu = renderCategoryMenu(categories);
 		margin: 0;
 	}
 
+	.container {
+		display: flex;
+		flex: 1;
+	}
+
 	nav {
 		background-color: #f4f4f4;
 		padding: 1rem;
-		flex: 0 0 200px;
+		width: 250px;
+		flex-shrink: 0;
 	}
 
 	nav h2 {
@@ -101,28 +109,21 @@ const categoryMenu = renderCategoryMenu(categories);
 	main {
 		flex: 1;
 		padding: 20px;
+		overflow-y: auto;
 	}
 
 	footer {
 		margin-top: auto;
 	}
 
-	@media (min-width: 768px) {
-		body {
-			flex-direction: row;
-			flex-wrap: wrap;
-		}
-
-		header, footer {
-			width: 100%;
+	@media (max-width: 768px) {
+		.container {
+			flex-direction: column;
 		}
 
 		nav {
+			width: 100%;
 			order: -1;
-		}
-
-		main {
-			flex: 1;
 		}
 	}
 </style>
