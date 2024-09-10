@@ -18,35 +18,32 @@ export async function getStaticPaths() {
 ---
 
 <Layout title={data.title}>
-  <div class="hero">
-    <h2>{data.title}</h2>
-    <p>Category: {category}</p>
-  </div>
-  <div class="listing-content">
+  <div class="listing-detail">
+    <h1>{data.title}</h1>
+    <p><strong>Category:</strong> {category}</p>
     <p>{data.description}</p>
   </div>
 </Layout>
 
 <style>
-  .hero {
-    background-color: var(--primary-color);
-    color: var(--white);
-    text-align: center;
-    padding: 3rem 1rem;
-    margin: -2rem -1rem 2rem -1rem;
+  .listing-detail {
+    padding: 1rem;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
-  .hero h2 {
-    font-size: 2.5rem;
+  .listing-detail h1 {
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+    color: var(--primary-color);
+  }
+
+  .listing-detail p {
     margin-bottom: 0.5rem;
   }
 
-  .hero p {
-    font-size: 1.2rem;
-    margin-top: 0;
-  }
-
-  .listing-content {
-    padding: 1rem;
+  .listing-detail p strong {
+    color: var(--secondary-color);
   }
 </style>

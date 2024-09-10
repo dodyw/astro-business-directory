@@ -1,8 +1,10 @@
 ---
+import Layout from '../layouts/Layout.astro';
 import type { Business } from '../types';
+import { CONFIG } from '../config';
 
 export async function getStaticPaths() {
-  const response = await fetch('http://localhost:4321/businesses.json');
+  const response = await fetch(`${CONFIG.BASE_URL}/businesses.json`);
   const data = await response.json();
   
   return data.businesses.map((business: Business) => ({
@@ -13,92 +15,84 @@ export async function getStaticPaths() {
 
 const { business } = Astro.props as { business: Business };
 
-function renderCategoryBreadcrumbs(categoryPath: string[]): string {
-  return categoryPath.map((cat, index) => {
-    const path = categoryPath.slice(0, index + 1).join('/');
-    return `<a href="/${path}">${cat}</a>`;
-  }).join(' > ');
+async function getCategoryName(id: string): Promise<string> {
+  const categoryResponse = await fetch(`${CONFIG.BASE_URL}/categories.json`);
+  const categoryData = await categoryResponse.json();
+  const categories = categoryData.categories;
+
+  const foundCategory = categories.find((cat: any) => cat.id === id);
+  return foundCategory ? foundCategory.name : id;
 }
+
+const breadcrumb = await Promise.all(business.category.map(getCategoryName));
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{business.name} - Business Directory</title>
-	</head>
-	<body>
-		<header>
-			<h1>{business.name}</h1>
-			<a href="/">Back to Home</a>
-		</header>
-		<main>
-			<div class="business-detail">
-				<p><strong>Category:</strong> <Fragment set:html={renderCategoryBreadcrumbs(business.category)} /></p>
-				<p><strong>Description:</strong> {business.description}</p>
-				<p><strong>Address:</strong> {business.address}</p>
-				<p><strong>Phone:</strong> {business.phone}</p>
-				<p><strong>Website:</strong> <a href={business.website} target="_blank" rel="noopener noreferrer">{business.website}</a></p>
-			</div>
-		</main>
-		<footer>
-			<p>&copy; 2023 Business Directory. All rights reserved.</p>
-		</footer>
-	</body>
-</html>
+<Layout title={`${business.name} - Business Directory`}>
+  <div class="breadcrumb">
+    <a href="/">Home</a>
+    {breadcrumb.map((name, index) => (
+      <span>
+        &gt; {index === breadcrumb.length - 1 
+          ? <span>{name}</span>
+          : <a href={`/${business.category.slice(0, index + 1).join('/')}`}>{name}</a>
+        }
+      </span>
+    ))}
+  </div>
+  <main>
+    <div class="business-detail">
+      <h1>{business.name}</h1>
+      <p><strong>Category:</strong> {breadcrumb.join(' > ')}</p>
+      <p><strong>Description:</strong> {business.description}</p>
+      <p><strong>Address:</strong> {business.address}</p>
+      <p><strong>Phone:</strong> {business.phone}</p>
+      <p><strong>Website:</strong> <a href={business.website} target="_blank" rel="noopener noreferrer">{business.website}</a></p>
+    </div>
+  </main>
+</Layout>
 
 <style>
-	body {
-		font-family: Arial, sans-serif;
-		line-height: 1.6;
-		margin: 0;
-		padding: 0;
-		background-color: #f0f0f0;
-	}
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
 
-	header, footer {
-		background-color: #333;
-		color: #fff;
-		text-align: center;
-		padding: 1rem;
-	}
+  .business-detail {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
 
-	header h1 {
-		margin: 0;
-	}
+  .business-detail p {
+    margin-bottom: 1rem;
+  }
 
-	header a {
-		color: #fff;
-		text-decoration: none;
-		margin-top: 0.5rem;
-		display: inline-block;
-	}
+  a {
+    color: #0066cc;
+    text-decoration: none;
+  }
 
-	main {
-		max-width: 800px;
-		margin: 0 auto;
-		padding: 2rem;
-	}
+  a:hover {
+    text-decoration: underline;
+  }
 
-	.business-detail {
-		background-color: #fff;
-		border-radius: 8px;
-		padding: 2rem;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	}
+  .breadcrumb {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
 
-	.business-detail p {
-		margin-bottom: 1rem;
-	}
+  .breadcrumb a {
+    color: var(--secondary-color);
+    text-decoration: none;
+  }
 
-	a {
-		color: #0066cc;
-		text-decoration: none;
-	}
+  .breadcrumb a:hover {
+    text-decoration: underline;
+  }
 
-	a:hover {
-		text-decoration: underline;
-	}
+  .breadcrumb span {
+    color: var(--text-color);
+  }
 </style>
