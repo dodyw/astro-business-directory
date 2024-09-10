@@ -39,16 +39,28 @@ const breadcrumb = await Promise.all(business.category.map(getCategoryName));
       </span>
     ))}
   </div>
-  <main>
-    <div class="business-detail">
-      <h1>{business.name}</h1>
-      <p><strong>Category:</strong> {breadcrumb.join(' > ')}</p>
-      <p><strong>Description:</strong> {business.description}</p>
-      <p><strong>Address:</strong> {business.address}</p>
-      <p><strong>Phone:</strong> {business.phone}</p>
-      <p><strong>Website:</strong> <a href={business.website} target="_blank" rel="noopener noreferrer">{business.website}</a></p>
+  <div class="business-detail">
+    <h1 class="business-name">{business.name}</h1>
+    <div class="business-info">
+      <div class="info-item">
+        <strong>Description:</strong>
+        <p>{business.description}</p>
+      </div>
+      <div class="info-item">
+        <strong>Address:</strong>
+        <p>{business.address}</p>
+      </div>
+      <div class="info-item">
+        <strong>Phone:</strong>
+        <p>{business.phone}</p>
+      </div>
+      <div class="info-item">
+        <strong>Website:</strong>
+        <a href={business.website} target="_blank" rel="noopener noreferrer" class="website-link">{business.website}</a>
+      </div>
     </div>
-  </main>
+  </div>
+  
 </Layout>
 
 <style>
