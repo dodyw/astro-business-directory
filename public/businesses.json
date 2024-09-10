@@ -3,6 +3,7 @@
     {
       "id": 1,
       "name": "TechSolutions Inc.",
+      "slug": "techsolutions-inc",
       "category": ["technology", "software", "web-development"],
       "description": "Innovative web development solutions for businesses",
       "address": "123 Tech Street, Silicon Valley, CA 94000",
@@ -12,6 +13,7 @@
     {
       "id": 2,
       "name": "MobileMasters",
+      "slug": "mobilemasters",
       "category": ["technology", "software", "mobile-apps"],
       "description": "Cutting-edge mobile app development",
       "address": "456 App Lane, San Francisco, CA 94101",
@@ -21,6 +23,7 @@
     {
       "id": 3,
       "name": "EnterpriseEdge",
+      "slug": "enterpriseedge",
       "category": ["technology", "software", "enterprise-software"],
       "description": "Robust enterprise software solutions",
       "address": "789 Corporate Drive, New York, NY 10001",
@@ -30,6 +33,7 @@
     {
       "id": 4,
       "name": "ByteBuilders",
+      "slug": "bytebuilders",
       "category": ["technology", "hardware", "computers"],
       "description": "Custom-built computers for professionals",
       "address": "101 Circuit Road, Austin, TX 78701",
@@ -39,6 +43,7 @@
     {
       "id": 5,
       "name": "NetworkNinjas",
+      "slug": "networkninjas",
       "category": ["technology", "hardware", "networking"],
       "description": "Expert networking solutions and services",
       "address": "202 Router Street, Seattle, WA 98101",
@@ -48,6 +53,7 @@
     {
       "id": 6,
       "name": "Gourmet Grille",
+      "slug": "gourmet-grille",
       "category": ["food-and-beverage", "restaurants"],
       "description": "Fine dining experience with a modern twist",
       "address": "303 Culinary Court, Chicago, IL 60601",
@@ -57,6 +63,7 @@
     {
       "id": 7,
       "name": "Cozy Corner Cafe",
+      "slug": "cozy-corner-cafe",
       "category": ["food-and-beverage", "cafes"],
       "description": "Charming cafe serving artisanal coffee and pastries",
       "address": "404 Latte Lane, Portland, OR 97201",
@@ -66,6 +73,7 @@
     {
       "id": 8,
       "name": "Mixology Masters",
+      "slug": "mixology-masters",
       "category": ["food-and-beverage", "bars"],
       "description": "Craft cocktails and vibrant nightlife",
       "address": "505 Cocktail Avenue, Miami, FL 33101",
@@ -75,6 +83,7 @@
     {
       "id": 9,
       "name": "IronWorks Gym",
+      "slug": "ironworks-gym",
       "category": ["health-and-fitness", "gyms"],
       "description": "State-of-the-art gym equipment and personal training",
       "address": "606 Fitness Blvd, Los Angeles, CA 90001",
@@ -84,6 +93,7 @@
     {
       "id": 10,
       "name": "ZenSpace Yoga",
+      "slug": "zenspace-yoga",
       "category": ["health-and-fitness", "yoga-studios"],
       "description": "Peaceful yoga studio for all skill levels",
       "address": "707 Serenity Street, Boulder, CO 80301",
@@ -93,6 +103,7 @@
     {
       "id": 11,
       "name": "NutriLife Consulting",
+      "slug": "nutrilife-consulting",
       "category": ["health-and-fitness", "nutrition"],
       "description": "Personalized nutrition plans and wellness coaching",
       "address": "808 Vitamin Avenue, San Diego, CA 92101",
@@ -102,6 +113,7 @@
     {
       "id": 12,
       "name": "LegalEase Associates",
+      "slug": "legalease-associates",
       "category": ["professional-services", "legal"],
       "description": "Comprehensive legal services for businesses and individuals",
       "address": "909 Justice Road, Washington, D.C. 20001",
@@ -111,6 +123,7 @@
     {
       "id": 13,
       "name": "BalanceSheet Bookkeeping",
+      "slug": "balancesheet-bookkeeping",
       "category": ["professional-services", "accounting"],
       "description": "Accurate and efficient accounting services",
       "address": "1010 Ledger Lane, Dallas, TX 75201",
@@ -120,6 +133,7 @@
     {
       "id": 14,
       "name": "StrategySync Consulting",
+      "slug": "strategysync-consulting",
       "category": ["professional-services", "consulting"],
       "description": "Strategic business consulting for growth and innovation",
       "address": "1111 Insight Avenue, Boston, MA 02101",
@@ -129,6 +143,7 @@
     {
       "id": 15,
       "name": "UrbanChic Boutique",
+      "slug": "urbanchic-boutique",
       "category": ["retail", "clothing"],
       "description": "Trendy and affordable fashion for all",
       "address": "1212 Style Street, New York, NY 10002",
@@ -138,6 +153,7 @@
     {
       "id": 16,
       "name": "TechTrove",
+      "slug": "techtrove",
       "category": ["retail", "electronics"],
       "description": "Latest gadgets and electronics at competitive prices",
       "address": "1313 Gadget Grove, San Jose, CA 95110",
@@ -147,6 +163,7 @@
     {
       "id": 17,
       "name": "CozyNest Home Goods",
+      "slug": "cozynest-home-goods",
       "category": ["retail", "home-goods"],
       "description": "Quality home decor and furnishings",
       "address": "1414 Comfort Court, Atlanta, GA 30301",
@@ -156,6 +173,7 @@
     {
       "id": 18,
       "name": "CloudNine Solutions",
+      "slug": "cloudnine-solutions",
       "category": ["technology", "software", "web-development"],
       "description": "Cloud-based web applications and services",
       "address": "1515 Cloud Street, Seattle, WA 98102",
@@ -165,6 +183,7 @@
     {
       "id": 19,
       "name": "AppAlchemy",
+      "slug": "appalchemy",
       "category": ["technology", "software", "mobile-apps"],
       "description": "Transforming ideas into powerful mobile applications",
       "address": "1616 Innovation Avenue, Austin, TX 78702",
@@ -174,6 +193,7 @@
     {
       "id": 20,
       "name": "DataDynamo",
+      "slug": "datadynamo",
       "category": ["technology", "software", "enterprise-software"],
       "description": "Big data solutions for enterprise-level insights",
       "address": "1717 Data Drive, Chicago, IL 60602",
@@ -183,6 +203,7 @@
     {
       "id": 21,
       "name": "CircuitCraft",
+      "slug": "circuitcraft",
       "category": ["technology", "hardware", "computers"],
       "description": "Bespoke computer builds for gaming and professional use",
       "address": "1818 Motherboard Lane, Los Angeles, CA 90002",
@@ -192,6 +213,7 @@
     {
       "id": 22,
       "name": "LinkLogic",
+      "slug": "linklogic",
       "category": ["technology", "hardware", "networking"],
       "description": "Advanced networking solutions for businesses",
       "address": "1919 Protocol Place, San Francisco, CA 94102",
@@ -201,6 +223,7 @@
     {
       "id": 23,
       "name": "Fusion Flavors",
+      "slug": "fusion-flavors",
       "category": ["food-and-beverage", "restaurants"],
       "description": "Innovative fusion cuisine from around the world",
       "address": "2020 Spice Street, Houston, TX 77001",
@@ -210,6 +233,7 @@
     {
       "id": 24,
       "name": "Bean Dreams",
+      "slug": "bean-dreams",
       "category": ["food-and-beverage", "cafes"],
       "description": "Specialty coffee and cozy atmosphere",
       "address": "2121 Roast Road, Portland, OR 97202",
@@ -219,6 +243,7 @@
     {
       "id": 25,
       "name": "Speakeasy Social",
+      "slug": "speakeasy-social",
       "category": ["food-and-beverage", "bars"],
       "description": "1920s themed bar with classic cocktails",
       "address": "2222 Prohibition Lane, New Orleans, LA 70112",
@@ -228,6 +253,7 @@
     {
       "id": 26,
       "name": "PeakPerformance",
+      "slug": "peakperformance",
       "category": ["health-and-fitness", "gyms"],
       "description": "High-intensity training and performance optimization",
       "address": "2323 Muscle Avenue, Miami, FL 33102",
@@ -237,6 +263,7 @@
     {
       "id": 27,
       "name": "MindfulMotion",
+      "slug": "mindfulmotion",
       "category": ["health-and-fitness", "yoga-studios"],
       "description": "Mindfulness-based yoga and meditation classes",
       "address": "2424 Zen Zone, San Diego, CA 92102",
@@ -246,6 +273,7 @@
     {
       "id": 28,
       "name": "VitalityVault",
+      "slug": "vitalityvault",
       "category": ["health-and-fitness", "nutrition"],
       "description": "Holistic nutrition and supplement store",
       "address": "2525 Wellness Way, Denver, CO 80201",
@@ -255,6 +283,7 @@
     {
       "id": 29,
       "name": "CodeCrafters Academy",
+      "slug": "codecrafters-academy",
       "category": ["technology", "software", "web-development"],
       "description": "Intensive coding bootcamp for aspiring developers",
       "address": "2626 Syntax Street, New York, NY 10003",
@@ -264,6 +293,7 @@
     {
       "id": 30,
       "name": "QuantumQuill",
+      "slug": "quantumquill",
       "category": ["technology", "software", "enterprise-software"],
       "description": "Quantum computing solutions for cutting-edge businesses",
       "address": "2727 Quantum Court, Palo Alto, CA 94303",

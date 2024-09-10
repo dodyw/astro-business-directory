@@ -24,6 +24,10 @@ function renderCategoryBreadcrumbs(categoryPath: string[]) {
     return `<a href="/${path}">${cat}</a>`;
   }).join(' > ');
 }
+
+function getBusinessUrl(business) {
+  return `/${business.category.join('/')}/${business.slug}`;
+}
 ---
 
 <div class="business-list">
@@ -31,7 +35,7 @@ function renderCategoryBreadcrumbs(categoryPath: string[]) {
   {businesses.length > 0 ? (
     businesses.map((business) => (
       <div class="business-card">
-        <h3><a href={`/business/${business.id}`}>{business.name}</a></h3>
+        <h3><a href={getBusinessUrl(business)}>{business.name}</a></h3>
         <p><strong>Category:</strong> <Fragment set:html={renderCategoryBreadcrumbs(business.category)} /></p>
         <p>{business.description}</p>
         <p><strong>Address:</strong> {business.address}</p>
